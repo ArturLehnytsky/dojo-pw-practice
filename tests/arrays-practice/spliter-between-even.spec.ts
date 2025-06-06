@@ -4,6 +4,7 @@ function addSplitBetweenEven(str: string) {
   let newString = '';
   for (let i = 0; i < str.length; i++) {
     const isNumberOfPairEven = Number(str[i]) % 2 === 0 && Number(str[i + 1]) % 2 === 0;
+
     isNumberOfPairEven ? (newString += str[i] + '-') : (newString += str[i]);
   }
   return newString;
