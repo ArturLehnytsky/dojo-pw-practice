@@ -14,14 +14,14 @@ function addSplitBetweenEven(str: string) {
   return newString;
 }
 
-test('split even numbers - only numbers', async () => {
+test('split even numbers - only numbers', { tag: ['@unit', '@split'] }, async () => {
   const testData = '025468';
   const expectedResult = '0-254-6-8';
   const actualResult = addSplitBetweenEven(testData);
   expect(actualResult === expectedResult).toBe(true);
 });
 
-test('split even numbers - with NaN chars', async () => {
+test('split even numbers - with NaN chars', { tag: ['@unit', '@split'] }, async () => {
   const testData = '02a54$68';
   const expectedResult = '0-2a54$6-8';
   const actualResult = addSplitBetweenEven(testData);
