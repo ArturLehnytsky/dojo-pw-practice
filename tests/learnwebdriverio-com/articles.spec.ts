@@ -3,6 +3,7 @@ import { User } from '../../conduit/helpers/creation-test-data';
 import { LoginPage } from '../../conduit/pages/login';
 import { HomePage } from '../../conduit/pages/home';
 import { NavigationBar } from '../../conduit/pages/top-bar-navigation';
+import { ArticleDetailsPage } from '../../conduit/pages/article-details';
 
 const user: User = {
   name: 'cryptozeus',
@@ -18,6 +19,7 @@ test('Selected article has the same tag', { tag: '@conduit' }, async ({ page }) 
   const loginPage = new LoginPage(page);
   const homePage = new HomePage(page);
   const navigation = new NavigationBar(page);
+  const articleDetails = new ArticleDetailsPage(page);
 
   await navigation.clickSignInBtn();
 
@@ -30,5 +32,5 @@ test('Selected article has the same tag', { tag: '@conduit' }, async ({ page }) 
   await homePage.clickPopularTag('dojo');
   await homePage.clickFirstArticle();
 
-  await expect(page.locator('//*[@data-qa-type="article-tag"]/*[contains(text(), "dojo")]')).toBeVisible();
+  expect(await articleDetails.isTagVisible('dojo')).toBeTruthy();
 });
