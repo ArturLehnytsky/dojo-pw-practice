@@ -1,14 +1,10 @@
 import { expect, test } from '@playwright/test';
 
-function getFirstElements(arr: Array<any>, count?: number) {
-  if (count === 0 || count === undefined) {
-    return arr[0];
-  } else {
-    return arr.slice(0, count);
-  }
+function getFirstElements(arr: Array<any>, count: number = 1) {
+  return arr.slice(0, count);
 }
 
-function getLastElements(arr: Array<any>, count?: number) {
+function getLastElements(arr: Array<any>, count: number = 1) {
   if (count === 0 || count === undefined) {
     return arr[arr.length - 1];
   } else {

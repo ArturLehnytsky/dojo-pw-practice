@@ -29,6 +29,7 @@ function compareArrays(arr1: Array<any>, arr2: Array<any>) {
 test('Concat method - 1D array', { tag: ['@unit', '@clone', '@array'] }, async () => {
   const testData = [21, undefined, 33];
   const clonedArray = cloneArrayByConcat(testData);
+  testData.push(2);
   const isCopy = compareArrays(testData, clonedArray);
   expect(isCopy).toBe(true);
 });
