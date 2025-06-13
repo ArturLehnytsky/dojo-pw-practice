@@ -1,7 +1,7 @@
 import { Locator, Page } from '@playwright/test';
 import { User } from '../helpers/creation-test-data';
 
-export class Registration {
+export class RegistrationPage {
   protected page: Page;
   userNameInput: Locator;
   userEmailInput: Locator;

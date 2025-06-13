@@ -1,9 +1,9 @@
 import { test, expect } from '@playwright/test';
 import { User } from '../../conduit/helpers/creation-test-data';
-import { LoginPage } from '../../conduit/pages/login';
-import { HomePage } from '../../conduit/pages/home';
-import { NavigationBar } from '../../conduit/pages/top-bar-navigation';
-import { ArticleDetailsPage } from '../../conduit/pages/article-details';
+import { LoginPage } from '../../conduit/pages/LoginPage';
+import { HomePage } from '../../conduit/pages/HomePage';
+import { NavigationBar } from '../../conduit/pages/TopBarNavigation';
+import { ArticleDetailsPage } from '../../conduit/pages/ArticleDetailsPage';
 
 const user: User = {
   name: 'cryptozeus',
