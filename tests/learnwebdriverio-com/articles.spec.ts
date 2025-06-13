@@ -15,7 +15,7 @@ test.beforeEach(async ({ page }) => {
   await page.goto('https://demo.learnwebdriverio.com/');
 });
 
-test('Selected article has the same tag', { tag: '@conduit' }, async ({ page }) => {
+test('WBDR-01 Selected article has the same tag', { tag: '@conduit' }, async ({ page }) => {
   const loginPage = new LoginPage(page);
   const homePage = new HomePage(page);
   const navigation = new NavigationBar(page);
