@@ -1,16 +1,10 @@
 import { faker } from '@faker-js/faker';
 
-export class User {
-  readonly name: string;
-  readonly email: string;
-  readonly password: string;
-
-  constructor(username: string, email: string, password: string) {
-    this.name = username;
-    this.email = email;
-    this.password = password;
-  }
-}
+export type User = {
+  name?: string;
+  email?: string;
+  password?: string;
+};
 
 export class Article {
   readonly title: string;
@@ -27,10 +21,12 @@ export class Article {
 }
 
 export function generateRegistrationUserData() {
-  const username = faker.person.firstName();
-  const email = faker.internet.email();
-  const password = 'JHgFD&kl';
-  return new User(username, email, password);
+  const user: User = {
+    name: faker.person.firstName(),
+    email: faker.internet.email(),
+    password: 'JHgFD&kl',
+  };
+  return user;
 }
 
 export function generateArticles(count: number = 1) {

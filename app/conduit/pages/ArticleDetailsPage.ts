@@ -9,14 +9,7 @@ export class ArticleDetailsPage {
     this.tagList = page.locator('//*[@class = "tag-list"]//a');
   }
 
-  async isTagVisible(tagName: string) {
-    const tags = await this.tagList.all();
-
-    for (const tag of tags) {
-      if (tagName === (await tag.innerText())) {
-        return true;
-      }
-    }
-    return false;
+  getTagLocatorByName(tagName: string) {
+    return this.page.locator(`//*[@data-qa-type="article-tag"]/a[@href='/tag/${tagName}']`);
   }
 }

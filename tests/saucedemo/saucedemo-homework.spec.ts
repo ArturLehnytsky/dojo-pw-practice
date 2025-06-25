@@ -1,47 +1,43 @@
-/*
-Написати тест + page object
+import { expect } from '@playwright/test';
+import { test } from './fixtures/BaseFixture';
+import { getStandardUser } from './test-data';
 
-Напишіть до цього два Page Object на ці сторінки (можна більше)
-1) https://www.saucedemo.com/inventory.html
-2) https://www.saucedemo.com/cart.html
-*/
+test(
+  'SC-01 User successfully completes purchase flow',
+  { tag: ['@smoke'] },
+  async ({ loginPage, productPage, cartPage, checkoutPage, checkoutOverviewPage }) => {
+    const user = getStandardUser();
+    const testProduct = 'Sauce Labs Onesie';
+    const expCompleteText = 'Your order has been dispatched';
 
-import { expect, test } from '@playwright/test';
-import { LoginPage } from '../../saucedemo/pages/LoginPage';
-import { getStandardUser } from '../../saucedemo/test-data/TestData';
-import { ProductsPage } from '../../saucedemo/pages/ProductsPage';
-import { CartPage } from '../../saucedemo/pages/CartPage';
-import { CheckoutPage } from '../../saucedemo/pages/CheckoutPage';
-import { CheckoutOverviewPage } from '../../saucedemo/pages/CheckoutOverviewPage';
+    await test.step('Login as standard_user', async () => {
+      await loginPage.goToLoginForm();
+      await loginPage.login(user);
+    });
 
-test('SC-01 User successfully completes purchase flow', { tag: ['@smoke'] }, async ({ page }) => {
-  const user = getStandardUser();
-  const loginPage = new LoginPage(page);
-  const productPage = new ProductsPage(page);
-  const cartPage = new CartPage(page);
-  const checkoutPage = new CheckoutPage(page);
-  const checkoutOverviewPage = new CheckoutOverviewPage(page);
-  const testProduct = 'Sauce Labs Onesie';
-  const expCompleteText = 'Your order has been dispatched, and will arrive just as fast as the pony can get there!';
+    await test.step('Add "Sauce Labs Onesie" to cart', async () => {
+      await productPage.getProductItem(testProduct).addProductToCart();
+    });
 
-  //login
-  await loginPage.goToLoginForm();
-  await loginPage.login(user);
+    await test.step('Open cart and observe that the selected product in the cart', async () => {
+      await productPage.goToCart();
+      await expect(
+        cartPage.getCartItem(testProduct).locators.getProductItemLocatorByName(testProduct)
+      ).toBeVisible();
+    });
 
-  //add to cart
-  await productPage.addProductToCartByName(testProduct);
+    await test.step('Fill the checkout form and click "Continue"', async () => {
+      await cartPage.clickCheckout();
+      await checkoutPage.fillCheckoutForm(user);
+      await checkoutPage.clickContinue();
+      await expect(await checkoutOverviewPage.getItemLocatorByName(testProduct)).toBeVisible();
+    });
 
-  //open cart
-  await productPage.goToCart();
-  await expect(await cartPage.getLocatorByProductName(testProduct)).toBeVisible();
-
-  //checkout
-  await cartPage.clickCheckout();
-  await checkoutPage.fillCheckoutForm(user);
-  await checkoutPage.clickContinue();
-  await expect(await checkoutOverviewPage.getItemLocatorByName(testProduct)).toBeVisible();
-
-  //finish
-  await checkoutOverviewPage.clickFinish();
-  await expect(await checkoutOverviewPage.getCompleteMessageLocator()).toHaveText(expCompleteText);
-});
+    await test.step('Complete purchase', async () => {
+      await checkoutOverviewPage.clickFinish();
+      await expect(await checkoutOverviewPage.getCompleteMessageLocator()).toContainText(
+        expCompleteText
+      );
+    });
+  }
+);

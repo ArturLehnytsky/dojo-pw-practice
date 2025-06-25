@@ -1,9 +1,9 @@
 import { test, expect } from '@playwright/test';
-import { RegistrationPage } from '../../conduit/pages/RegistrationPage';
-import { ArticleCreationFormPage } from '../../conduit/pages/ArticleCreationPage';
-import { Profile } from '../../conduit/pages/ProfilePage';
-import { generateArticles, generateRegistrationUserData } from '../../conduit/helpers/creation-test-data';
-import { NavigationBar } from '../../conduit/pages/TopBarNavigation';
+import { RegistrationPage } from '../../app/conduit/pages/RegistrationPage';
+import { ArticleCreationFormPage } from '../../app/conduit/pages/ArticleCreationPage';
+import { Profile } from '../../app/conduit/pages/ProfilePage';
+import { generateArticles, generateRegistrationUserData } from '../../app/conduit/helpers/creation-test-data';
+import { NavigationBar } from '../../app/conduit/pages/TopBarNavigation';
 
 const user = generateRegistrationUserData();
 let registerPage: RegistrationPage;

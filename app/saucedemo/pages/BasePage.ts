@@ -1,10 +1,10 @@
 import { Locator, Page } from '@playwright/test';
 
-export class BasePage {
+export abstract class BasePage {
   protected page: Page;
   private cart: Locator;
 
-  constructor(page: Page) {
+  protected constructor(page: Page) {
     this.page = page;
     this.cart = page.locator('//a[@data-test= "shopping-cart-link"]');
   }

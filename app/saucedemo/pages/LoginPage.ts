@@ -1,5 +1,5 @@
 import { Locator, Page } from '@playwright/test';
-import { SauceUserData } from '../test-data/TestData';
+import { SauceUserData } from '../../../tests/saucedemo/test-data';
 
 export class LoginPage {
   private page: Page;

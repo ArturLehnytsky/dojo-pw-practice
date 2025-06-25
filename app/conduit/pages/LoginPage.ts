@@ -14,9 +14,21 @@ export class LoginPage {
     this.signInBtn = page.locator('//form/button[contains(text(), "Sign in")]');
   }
 
-  async logIn(user: User) {
-    await this.userEmailInput.fill(user.email);
-    await this.userPasswordInput.fill(user.password);
+  async fillSignInForm(user: Partial<User>) {
+    if (user.email !== undefined) {
+      await this.userEmailInput.fill(user.email);
+    }
+    if (user.password !== undefined) {
+      await this.userPasswordInput.fill(user.password);
+    }
+  }
+
+  async clickSignInBtn() {
     await this.signInBtn.click();
+  }
+
+  async signInAs(user: User) {
+    await this.fillSignInForm(user);
+    await this.clickSignInBtn();
   }
 }

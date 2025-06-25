@@ -1,6 +1,6 @@
 import { Locator, Page } from '@playwright/test';
 import { BasePage } from './BasePage';
-import { SauceUserData } from '../test-data/TestData';
+import { SauceUserData } from '../../../tests/saucedemo/test-data';
 
 export class CheckoutPage extends BasePage {
   private firstNameField: Locator;

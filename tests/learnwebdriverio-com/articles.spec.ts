@@ -1,9 +1,9 @@
 import { test, expect } from '@playwright/test';
-import { User } from '../../conduit/helpers/creation-test-data';
-import { LoginPage } from '../../conduit/pages/LoginPage';
-import { HomePage } from '../../conduit/pages/HomePage';
-import { NavigationBar } from '../../conduit/pages/TopBarNavigation';
-import { ArticleDetailsPage } from '../../conduit/pages/ArticleDetailsPage';
+import { User } from '../../app/conduit/helpers/creation-test-data';
+import { HomePage } from '../../app/conduit/pages/HomePage';
+import { NavigationBar } from '../../app/conduit/pages/TopBarNavigation';
+import { ArticleDetailsPage } from '../../app/conduit/pages/ArticleDetailsPage';
+import { RegistrationPage } from '../../app/conduit/pages/RegistrationPage';
 
 const user: User = {
   name: 'cryptozeus',
@@ -16,21 +16,25 @@ test.beforeEach(async ({ page }) => {
 });
 
 test('WBDR-01 Selected article has the same tag', { tag: '@conduit' }, async ({ page }) => {
-  const loginPage = new LoginPage(page);
+  const registrationPage = new RegistrationPage(page);
   const homePage = new HomePage(page);
   const navigation = new NavigationBar(page);
   const articleDetails = new ArticleDetailsPage(page);
 
-  await navigation.clickSignInBtn();
+  await navigation.clickSignUpBtn();
 
-  await loginPage.logIn(user);
-  await page.waitForLoadState('load');
+  await registrationPage.registerUser(user);
+  await expect(homePage.getProfileBtnLocatorByUsername(user)).toBeVisible();
 
   await homePage.clickMyFeedTab();
+  await expect(homePage.getTabBtnLocator('my-feed')).toBeVisible();
+
   await homePage.clickGlobalFeedTab();
+  await expect(homePage.getTabBtnLocator('global')).toBeVisible();
 
   await homePage.clickPopularTag('dojo');
-  await homePage.clickFirstArticle();
+  await expect(homePage.getTabBtnLocator('tag')).toBeVisible();
 
-  expect(await articleDetails.isTagVisible('dojo')).toBeTruthy();
+  await homePage.clickArticleByNumber();
+  await expect(articleDetails.getTagLocatorByName('dojo')).toBeVisible();
 });
